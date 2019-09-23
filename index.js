@@ -1,10 +1,14 @@
 const express = require('express');
 const app = express();
-const stats = {};
-app.get('/', function(req, res) {
-    res.setHeader('Content-Type', 'application/json');
-    let ip = req.connection.remoteAddress;
-    stats[ip] = stats[ip] ? stats[ip] + 1 : 1;
-    res.send(stats);
+
+app.get('/', (req, res) => {
+  console.log('Hello world received a request.');
+
+  const target = process.env.TARGET || 'World';
+  res.send(`Hello ${target}!`);
 });
-app.listen(8080);
+
+const port = process.env.PORT || 8080;
+app.listen(port, () => {
+  console.log('Hello world listening on port', port);
+});
